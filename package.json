@@ -2,10 +2,11 @@
   "name": "curiotory-api-node.js-mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.ts"
+    "build": "npx tsc",
+    "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
   "author": "",
