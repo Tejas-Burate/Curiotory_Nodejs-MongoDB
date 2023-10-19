@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDataTableForLanguageList = exports.deleteLanguageByLanguageId = exports.createLanguage = exports.uploadImage = exports.upload = exports.getDropdownLanguageList = exports.getAllLanguageList = void 0;
+exports.getDataTableForLanguageList = exports.deleteLanguageByLanguageId = exports.createLanguage = exports.uploadImage = exports.upload = exports.getLanguageByLanguageId = exports.getDropdownLanguageList = exports.getAllLanguageList = void 0;
 const language_1 = __importDefault(require("../models/language"));
 const multer_1 = __importDefault(require("multer"));
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
@@ -34,6 +34,29 @@ const getAllLanguageList = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.getAllLanguageList = getAllLanguageList;
+const getLanguageByLanguageId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { languageId } = req.body;
+        const language = yield language_1.default.findOne({ _id: languageId });
+        console.log("language", language);
+        if (!language) {
+            res.status(404).json({
+                status: 404,
+                error: "404",
+                message: `Language od ID ${languageId} is not found`,
+            });
+            return;
+        }
+        res.status(200).json(language);
+    }
+    catch (error) {
+        console.log(error);
+        res
+            .status(500)
+            .json({ status: 500, error: "500", message: "Internal Server Error" });
+    }
+});
+exports.getLanguageByLanguageId = getLanguageByLanguageId;
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/images/language");
@@ -202,21 +225,19 @@ const getDataTableForLanguageList = (req, res) => __awaiter(void 0, void 0, void
         ];
         // Execute the aggregation pipeline
         const lang = yield language_1.default.aggregate(pipeline);
-        // Prepare the response data
-        const result = {
-            data: lang.map((l) => ({
-                languageId: l.languageId,
-                languageName: l.languageName,
-                languageObj: l.languageObj,
-                languageImage: l.languageImage,
-            })),
-        };
+        // Prepare the response data as an array
+        const result = lang.map((l) => ({
+            languageId: l.languageId,
+            languageName: l.languageName,
+            languageObj: l.languageObj,
+            languageImage: l.languageImage,
+        }));
         res.status(200).json({
             recordPerPage,
             recordsTotal: totalRecords.toString(),
             recordsFiltered: totalRecords.toString(),
             totalPages: totalPage.toString(),
-            data: result,
+            result,
         });
     }
     catch (error) {

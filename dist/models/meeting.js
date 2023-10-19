@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const meetingSchema = new mongoose_1.default.Schema({
     users: {
-        type: Object,
+        type: Array,
+        ref: "User",
         required: true,
     },
     languageId: {

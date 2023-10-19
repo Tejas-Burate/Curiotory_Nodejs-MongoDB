@@ -12,12 +12,12 @@ const lessonSchema = new mongoose_1.default.Schema({
     },
     languageId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "Language",
+        // ref: "Language",
         required: false,
     },
     levelId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "Level",
+        // ref: "Level",
         required: false,
     },
     lessonName: {

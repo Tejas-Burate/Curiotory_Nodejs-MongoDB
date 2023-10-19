@@ -8,12 +8,12 @@ const lessonSchema = new mongoose.Schema({
   },
   languageId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Language",
+    // ref: "Language",
     required: false,
   },
   levelId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Level",
+    // ref: "Level",
     required: false,
   },
   lessonName: {

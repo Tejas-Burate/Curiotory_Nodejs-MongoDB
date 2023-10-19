@@ -5,6 +5,15 @@ import languageRoutes from "./routes/language";
 import levelRoutes from "./routes/level";
 import planRoutes from "./routes/plan";
 import lessonRoutes from "./routes/lesson";
+import videoRoutes from "./routes/video";
+import questionRoutes from "./routes/question";
+import moduleRoutes from "./routes/module";
+import testRoutes from "./routes/test";
+import meetingRoutes from "./routes/meeting";
+import userRoutes from "./routes/user";
+import roleRoutes from "./routes/role";
+import liveTestRoutes from "./routes/liveTest";
+import homeRouter from "./routes/home";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -16,6 +25,15 @@ app.use("/", languageRoutes);
 app.use("/", levelRoutes);
 app.use("/", planRoutes);
 app.use("/", lessonRoutes);
+app.use("/", videoRoutes);
+app.use("/", questionRoutes);
+app.use("/", moduleRoutes);
+app.use("/", testRoutes);
+app.use("/", meetingRoutes);
+app.use("/", userRoutes);
+app.use("/", roleRoutes);
+app.use("/", liveTestRoutes);
+app.use("/", homeRouter);
 
 // Connect to the database
 connectDb()

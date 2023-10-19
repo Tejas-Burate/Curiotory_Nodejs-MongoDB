@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
+dotenv.config();
 const connectDb = async () => {
   try {
     const connection = await mongoose.connect(
-      "mongodb+srv://ioweb3:ioweb3123@serverlessinstance0.nad5ffl.mongodb.net/curiotory?retryWrites=true&w=majority",
+      process.env.CONNECTION_STRING as string,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

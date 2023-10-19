@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDataTableForPlanList = exports.getAllPlanList = void 0;
+exports.getDataTableForPlanList = exports.getPlansByLanguageId = exports.getAllPlanList = void 0;
+const user_1 = __importDefault(require("../models/user"));
 const plan_1 = __importDefault(require("../models/plan"));
 const getAllPlanList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -33,16 +34,43 @@ const getAllPlanList = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getAllPlanList = getAllPlanList;
-// const getPlansByLanguageId = async (req: Request, res, Response) => {
-//   try {
-//     const { user };
-//   } catch (error) {
-//     console.log("error", error);
-//     res
-//       .status(500)
-//       .json({ status: 500, error: "500", message: "Internal Server Error" });
-//   }
-// };
+const getPlansByLanguageId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.body;
+        const user = yield user_1.default.findById(userId);
+        if (!user) {
+            res.status(404).json({
+                status: 404,
+                error: "404",
+                message: `User of userId ${userId} is not found`,
+            });
+            return;
+        }
+        const userLanguageId = user.languageId;
+        console.log("userLanguageId", userLanguageId);
+        const plan = yield plan_1.default.find({
+            languageId: user.languageId,
+        });
+        console.log("plan", plan);
+        if (plan.length === 0) {
+            res.status(404).json({
+                status: 404,
+                error: "404",
+                message: `Plan of languageId ${user.languageId} is not found`,
+            });
+            return;
+        }
+        res.status(200).json(plan);
+        console.log("user", user);
+    }
+    catch (error) {
+        console.log("error", error);
+        res
+            .status(500)
+            .json({ status: 500, error: "500", message: "Internal Server Error" });
+    }
+});
+exports.getPlansByLanguageId = getPlansByLanguageId;
 const getDataTableForPlanList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { search, length, start, order } = req.body;
     // const userId = req.params.id; // Extract restaurant ID from the URL parameter

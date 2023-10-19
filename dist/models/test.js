@@ -6,16 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const testSchema = new mongoose_1.default.Schema({
     languageId: {
-        type: Number,
-        required: true,
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "Language",
+        required: false,
     },
     levelId: {
-        type: Number,
-        required: true,
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "Level",
+        required: false,
     },
     lesson: {
-        type: Object,
-        required: true,
+        type: Array,
+        ref: "Lesson",
+        required: false,
     },
     testImage: {
         type: String,

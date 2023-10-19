@@ -22,6 +22,29 @@ const getAllLanguageList = async (req: Request, res: Response) => {
   }
 };
 
+const getLanguageByLanguageId = async (req: Request, res: Response) => {
+  try {
+    const { languageId } = req.body;
+    const language = await Language.findOne({ _id: languageId });
+    console.log("language", language);
+    if (!language) {
+      res.status(404).json({
+        status: 404,
+        error: "404",
+        message: `Language od ID ${languageId} is not found`,
+      });
+      return;
+    }
+
+    res.status(200).json(language);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ status: 500, error: "500", message: "Internal Server Error" });
+  }
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images/language");
@@ -212,22 +235,20 @@ const getDataTableForLanguageList = async (req: Request, res: Response) => {
     // Execute the aggregation pipeline
     const lang = await Language.aggregate(pipeline);
 
-    // Prepare the response data
-    const result = {
-      data: lang.map((l: any) => ({
-        languageId: l.languageId,
-        languageName: l.languageName,
-        languageObj: l.languageObj,
-        languageImage: l.languageImage,
-      })),
-    };
+    // Prepare the response data as an array
+    const result = lang.map((l: any) => ({
+      languageId: l.languageId,
+      languageName: l.languageName,
+      languageObj: l.languageObj,
+      languageImage: l.languageImage,
+    }));
 
     res.status(200).json({
       recordPerPage,
       recordsTotal: totalRecords.toString(),
       recordsFiltered: totalRecords.toString(),
       totalPages: totalPage.toString(),
-      data: result,
+      result,
     });
   } catch (error) {
     console.error(error);
@@ -240,6 +261,7 @@ const getDataTableForLanguageList = async (req: Request, res: Response) => {
 export {
   getAllLanguageList,
   getDropdownLanguageList,
+  getLanguageByLanguageId,
   upload, // Uncomment to enable multer file upload
   uploadImage, // Uncomment to enable multer file upload
   createLanguage,

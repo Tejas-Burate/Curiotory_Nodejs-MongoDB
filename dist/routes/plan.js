@@ -8,4 +8,5 @@ const plan_1 = require("../controllers/plan");
 const router = express_1.default.Router();
 router.get("/getAllPlanList", plan_1.getAllPlanList);
 router.post("/getDataTableForPlanList", plan_1.getDataTableForPlanList);
+router.post("/getPlansByLanguageId", plan_1.getPlansByLanguageId);
 exports.default = router;

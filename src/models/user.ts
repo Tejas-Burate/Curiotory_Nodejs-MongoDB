@@ -10,8 +10,8 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   roleId: {
-    type: Number,
-    ref: "role",
+    type: mongoose.Schema.Types.ObjectId, // Assuming it's an ObjectID reference
+    ref: "Role",
     required: true,
   },
   fullName: {

@@ -13,9 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const connectDb = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const connection = yield mongoose_1.default.connect("mongodb+srv://ioweb3:ioweb3123@serverlessinstance0.nad5ffl.mongodb.net/curiotory?retryWrites=true&w=majority", {
+        const connection = yield mongoose_1.default.connect(process.env.CONNECTION_STRING, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         } // Cast to the appropriate type

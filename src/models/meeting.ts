@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const meetingSchema = new mongoose.Schema({
   users: {
-    type: Object,
+    type: Array,
+    ref: "User",
     required: true,
   },
   languageId: {

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 // Create a Mongoose schema for the Role
 const roleSchema = new mongoose.Schema({
@@ -22,4 +23,4 @@ const roleSchema = new mongoose.Schema({
 });
 // Create a Mongoose model for the Role using the schema
 const Role = mongoose.model("Role", roleSchema);
-module.exports = Role;
+exports.default = Role;

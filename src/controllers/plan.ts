@@ -1,5 +1,8 @@
-import Plan from "../models/plan";
 import { Request, Response } from "express";
+import User from "../models/user";
+import Plan from "../models/plan";
+import { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 const getAllPlanList = async (req: Request, res: Response) => {
   try {
@@ -20,16 +23,46 @@ const getAllPlanList = async (req: Request, res: Response) => {
   }
 };
 
-// const getPlansByLanguageId = async (req: Request, res, Response) => {
-//   try {
-//     const { user };
-//   } catch (error) {
-//     console.log("error", error);
-//     res
-//       .status(500)
-//       .json({ status: 500, error: "500", message: "Internal Server Error" });
-//   }
-// };
+const getPlansByLanguageId = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      res.status(404).json({
+        status: 404,
+        error: "404",
+        message: `User of userId ${userId} is not found`,
+      });
+      return;
+    }
+    const userLanguageId = user.languageId;
+    console.log("userLanguageId", userLanguageId);
+    const plan = await Plan.find({
+      languageId: user.languageId,
+    });
+    console.log("plan", plan);
+
+    if (plan.length === 0) {
+      res.status(404).json({
+        status: 404,
+        error: "404",
+        message: `Plan of languageId ${user.languageId} is not found`,
+      });
+      return;
+    }
+
+    res.status(200).json(plan);
+
+    console.log("user", user);
+  } catch (error) {
+    console.log("error", error);
+    res
+      .status(500)
+      .json({ status: 500, error: "500", message: "Internal Server Error" });
+  }
+};
 
 const getDataTableForPlanList = async (req: Request, res: Response) => {
   const { search, length, start, order } = req.body;
@@ -89,4 +122,4 @@ const getDataTableForPlanList = async (req: Request, res: Response) => {
   });
 };
 
-export { getAllPlanList, getDataTableForPlanList };
+export { getAllPlanList, getPlansByLanguageId, getDataTableForPlanList };

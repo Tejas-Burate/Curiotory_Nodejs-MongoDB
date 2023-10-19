@@ -2,6 +2,7 @@ import express from "express";
 import {
   getAllLanguageList,
   getDropdownLanguageList,
+  getLanguageByLanguageId,
   upload,
   uploadImage,
   createLanguage,
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get("/getAllLanguageList", getAllLanguageList);
 router.get("/getDropdownLanguageList", getDropdownLanguageList);
 router.post("/uploadImage", upload.array("imageFile"), uploadImage);
+router.post("/getLanguageByLanguageId", getLanguageByLanguageId);
 router.post("/createLanguage", createLanguage);
 router.delete("/deleteLanguageByLanguageId/:id", deleteLanguageByLanguageId);
 router.post("/getDataTableForLanguageList", getDataTableForLanguageList);

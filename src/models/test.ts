@@ -2,16 +2,19 @@ import mongoose from "mongoose";
 
 const testSchema = new mongoose.Schema({
   languageId: {
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Language",
+    required: false,
   },
   levelId: {
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Level",
+    required: false,
   },
   lesson: {
-    type: Object,
-    required: true,
+    type: Array,
+    ref: "Lesson",
+    required: false,
   },
   testImage: {
     type: String,

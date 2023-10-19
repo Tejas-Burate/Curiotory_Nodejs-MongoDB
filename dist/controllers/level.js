@@ -45,26 +45,64 @@ const createLevel = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.createLevel = createLevel;
-//Need build logic
-// const getLevelsByLevelId = async (req: Request, res: Response) => {
+// const isPurchased = async (userId, levelId, languageId) => {
 //   try {
-//     const id = req.body.userId;
-//     console.log("id", id);
-//     const level = await Level.find({ levelId: id });
-//     if (!level) {
-//       res.status(400).json({
-//         status: 400,
-//         error: 400,
-//         message: "Level of given id is not found",
-//       });
+//     let isPurchased = false;
+//     const getOrders = await Order.find({ userId });
+//     if (getOrders) {
+//       for (const g of getOrders) {
+//         if (g.status === "paid") {
+//           const planId = g.planId;
+//           const planObj = await Plan.findOne({
+//             planId,
+//             languageId,
+//             isLivePlan: "0",
+//           });
+//           if (planObj) {
+//             const levels = JSON.parse(planObj.levels);
+//             for (const l of levels) {
+//               if (l === levelId) {
+//                 const now = new Date();
+//                 const endDate = new Date(now);
+//                 endDate.setDate(
+//                   endDate.getDate() + parseInt(planObj.planDuration)
+//                 );
+//                 if (now < endDate) {
+//                   isPurchased = true;
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
 //     }
+//     return isPurchased;
 //   } catch (error) {
-//     console.log(error);
-//     res
-//       .status(500)
-//       .json({ status: 500, error: "500", message: "Internal Server Error" });
+//     console.error(error);
+//     throw new Error("Internal Server Error");
 //   }
 // };
+// Usage
+// const userId = "yourUserId";
+// const levelId = "yourLevelId";
+// const languageId = "yourLanguageId";
+// isPurchased(userId, levelId, languageId)
+//   .then((result) => {
+//     console.log("Is Purchased:", result);
+//   })
+//   .catch((error) => {
+//     console.error("Error:", error.message);
+//   });
+const getLevelsByLevelId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) {
+        console.log(error);
+        res
+            .status(500)
+            .json({ status: 500, error: "500", message: "Internal Server Error" });
+    }
+});
 const getAllLanguages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const level = yield level_1.default.find();

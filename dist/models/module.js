@@ -28,17 +28,18 @@ const moduleSchema = new mongoose_1.default.Schema({
         type: Number,
         required: true,
     },
-    difficulty: {
+    difficultyLevel: {
         type: String,
         required: true,
     },
-    mode: {
+    examMode: {
         type: String,
         required: true,
     },
     questionSet: {
-        type: Object,
-        default: null, // You can set the default value to null or adjust as needed
+        type: Array,
+        required: true,
+        // default: null, // You can set the default value to null or adjust as needed
     },
     dateCreated: {
         type: Date,

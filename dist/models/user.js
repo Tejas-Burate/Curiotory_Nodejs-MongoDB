@@ -14,8 +14,8 @@ const userSchema = new mongoose_1.default.Schema({
         required: true,
     },
     roleId: {
-        type: Number,
-        ref: "role",
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "Role",
         required: true,
     },
     fullName: {
